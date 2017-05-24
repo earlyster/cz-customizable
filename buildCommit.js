@@ -2,11 +2,13 @@
 
 
 var wrap = require('word-wrap');
+var process = require('process');
 
 
 module.exports = function buildCommit(answers) {
 
   var maxLineWidth = 100;
+  var systemId = process.env.COMMIT_SYSTEM_ID;
 
   var wrapOptions = {
     trim: true,
@@ -56,6 +58,9 @@ module.exports = function buildCommit(answers) {
   }
   if (footer) {
     result += '\n\nISSUES CLOSED: ' + footer;
+  }
+  if(systemId){
+    result += '\n\nSYSID: ' + systemId;
   }
 
   return escapeSpecialChars(result);
