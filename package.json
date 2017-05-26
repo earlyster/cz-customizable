@@ -23,6 +23,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "shelljs": "0.7.6",
     "editor": "1.0.0",
     "find-config": "0.3.0",
     "temp": "0.8.3",
