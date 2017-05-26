@@ -11,7 +11,15 @@ var temp = require('temp').track();
 var fs = require('fs');
 var path = require('path');
 var buildCommit = require('./buildCommit');
+var _shelljs = require('shelljs');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _shelljs2 = _interopRequireDefault(_shelljs);
+
+function getGitRootPath() {
+  return _shelljs2.default.exec('git rev-parse --show-toplevel').stdout.trim();
+}
 
 /* istanbul ignore next */
 function readConfigFile() {
@@ -20,8 +28,10 @@ function readConfigFile() {
   var pkg = findConfig.require('package.json', {home: false});
   if (pkg) {
     if (pkg.config && pkg.config['cz-customizable'] && pkg.config['cz-customizable'].config) {
-      var pkgPath = path.resolve(pkg.config['cz-customizable'].config);
 
+      console.log('config = ', pkg.config['cz-customizable'].config);
+      var pkgPath = path.resolve(getGitRootPath(), pkg.config['cz-customizable'].config);
+      
       console.info('>>> Using cz-customizable config specified in your package.json: ', pkgPath);
 
       return require(pkgPath);
